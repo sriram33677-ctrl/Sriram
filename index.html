@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sriram.KPortfolio - Ben 10 Theme</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+      background: #0a0a12;
+      color: #e0e0e0;
+    }
+    header {
+      background: linear-gradient(135deg, #0a0a12 0%, #1a4d2a 100%);
+      color: white;
+      text-align: center;
+      padding: 3rem 1rem 5rem;
+      position: relative;
+      border-bottom: 4px solid #00ff00;
+    }
+    .profile-picture {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #00ff00;
+      position: relative;
+      margin-top: 80px;
+      margin-bottom: 1rem;
+      box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+    }
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      background: #0a0a12;
+      box-shadow: 0 2px 10px rgba(0, 255, 0, 0.3);
+      border-bottom: 2px solid #00ff00;
+    }
+    .tabs button {
+      padding: 0.8rem 1.5rem;
+      background: #0a0a12;
+      border: 2px solid #00ff00;
+      border-radius: 20px;
+      margin: 0.5rem;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 500;
+      color: #00ff00;
+      transition: all 0.3s ease;
+    }
+    .tabs button:hover,
+    .tabs button.active {
+      background: #00ff00;
+      color: #0a0a12;
+      border-color: #00ff00;
+      box-shadow: 0 0 15px rgba(0, 255, 0, 0.7);
+    }
+    section {
+      max-width: 900px;
+      margin: auto;
+      background: #1a1a24;
+      padding: 2rem;
+      margin-top: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+      display: none;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.5s ease;
+      border: 1px solid #00ff00;
+    }
+    section.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+    h2 {
+      color: #00ff00;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+      border-bottom: 2px solid #00ff00;
+      padding-bottom: 0.5rem;
+    }
+    ul li {
+      margin-bottom: 0.5rem;
+      list-style-type: none;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+    ul li:before {
+      content: "•";
+      color: #00ff00;
+      font-weight: bold;
+      position: absolute;
+      left: 0;
+    }
+    .download-button {
+      display: inline-block;
+      background: #00ff00;
+      color: #0a0a12;
+      padding: 0.7rem 1.5rem;
+      border-radius: 20px;
+      text-decoration: none;
+      margin-top: 1rem;
+      font-weight: bold;
+      border: 2px solid #00ff00;
+      transition: all 0.3s ease;
+    }
+    .download-button:hover {
+      background: #0a0a12;
+      color: #00ff00;
+      box-shadow: 0 0 15px rgba(0, 255, 0, 0.7);
+    }
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      background: #0a0a12;
+      color: #00ff00;
+      margin-top: 3rem;
+      border-top: 4px solid #00ff00;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .modal-content {
+      background: #1a1a24;
+      padding: 2rem;
+      border-radius: 10px;
+      width: 300px;
+      text-align: center;
+      animation: fadeIn 0.3s ease-in-out;
+      border: 2px solid #00ff00;
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+    }
+    .modal-content input {
+      width: 100%;
+      padding: 10px;0p
+      q
+      margin-top: 10px;
+      font-size: 16px;
+      border-radius: 6px;
+      background: #0a0a12;
+      border: 1px solid #00ff00;
+      color: #fff;
+    }
+    .modal-content button {
+      background: #00ff00;
+      color: #0a0a12;
+      border: none;
+      padding: 10px 20px;
+      margin-top: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+    .modal-content button:hover {
+      background: #0a0a12;
+      color: #00ff00;
+      box-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
+    }
+    .modal-content .error {
+      color: #ff0033;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @media (max-width: 600px) {
+      .tabs button {
+        flex: 1 0 100%;
+        padding: 0.75rem;
+        font-size: 15px;
+      }
+      .profile-picture {
+        position: static;
+        margin-bottom: 1rem;
+      }
+      header {
+        padding-bottom: 2rem;
+      }
+    }
+    .dark-toggle {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: #00ff00;
+      border: none;
+      padding: 0.5rem 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 5px;
+      color: #0a0a12;
+      transition: all 0.3s ease;
+    }
+    .dark-toggle:hover {
+      background: #0a0a12;
+      color: #00ff00;
+      box-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
+    }
+    a {
+      color: #00ff00;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    a:hover {
+      color: #ffffff;
+      text-shadow: 0 0 5px rgba(0, 255, 0, 0.7);
+    }
+    .ben10-logo {
+      font-family: 'Arial Black', Arial, sans-serif;
+      font-size: 2.5rem;
+      color: #00ff00;
+      text-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
+      margin-bottom: 1rem;
+    }
+    .omnitrix-symbol {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      background: #00ff00;
+      border-radius: 50%;
+      margin-right: 10px;
+      box-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
+      position: relative;
+    }
+    .omnitrix-symbol:before {
+      content: "";
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      width: 20px;
+      height: 20px;
+      background: #0a0a12;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+<header style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem">
+  <button class="dark-toggle" onclick="toggleDarkMode()">Toggle Mode</button>
+  <div class="ben10-logo">Green life</div>
+  <img src="./Vijay.jpg" alt="Profile Picture" class="profile-picture" id="profileImage">
+  <div style="text-align: center;">
+    <h1>Sriram.K</h1>
+    <p><span class="omnitrix-symbol"></span>BSc Computer Science<span class="omnitrix-symbol"></span></p>
+  </div>
+  <input type="file" id="fileInput" accept="image/*" style="display:none">
+  <button onclick="showModal()" style="margin-top: 1rem; background: #00ff00; color: #0a0a12; border: none; padding: 0.5rem 1rem; border-radius: 20px; font-weight: bold; cursor: pointer;">Change Profile</button><!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <title>Page title</title>
+  </head>
+  <body>
+      
+  </body>
+  </html>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" data-tab="about">About</button>
+  <button class="tab-btn" data-tab="certificates">Certificates</button>
+  <button class="tab-btn" data-tab="education">Education</button>
+  <button class="tab-btn" data-tab="skills">Skills</button>
+
+  <button class="tab-btn" data-tab="contact">Contact</button>
+</div>
+
+<section id="about" class="active">
+  <h2>About Me</h2>
+  <p>Studying as a <b><i>student</i></b> in the Computer Science Department, Puratchi Thalaivi Amma Govt Arts and Science College, Palladam</p>
+</section>
+
+<section id="education">
+  <h2>Education</h2>
+  <p>B.Sc Computer Science, Purachi Thalavi Amma Government Arts and Science College, Palladam</p>
+</section>
+
+<section id="skills">
+  <h2>Skills</h2>
+  <ul>
+    <li>Problem Solving</li>
+    <li>Computer Handling and Debugging</li>
+    <li>Data Management</li>
+    <li>Easy to Understand</li>
+    <li>I'm strong with Python, HTML and C</li>
+  </ul>
+</section>
+
+<section id="papers">
+  <h2>Papers</h2>
+  <ul>
+    <li><a href="https://ieeexplore.ieee.org/document/5452614/" target="_blank">IEEE Explore</a></li>
+    <li><a href="https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.ciitresearch.org/dl/index.php/aiml/rt/printerFriendly/AIML052009006/0&ved=2ahUKEwimro2y2fyNAxWNSGwGHdcNNk8QFnoECBQQAQ&usg=AOvVaw3JFIM6nLItCexS-pSCzCo3">CIIT Int Journal</a></li>
+    <li><a href="https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=http://www.ijcte.com/papers/288-L052.pdf&ved=2ahUKEwimro2y2fyNAxWNSGwGHdcNNk8QFnoECBgQAQ&usg=AOvVaw1zg3bnu8HbACHyMy7PLgRM">IJCTE</a></li>
+  </ul>
+</section>
+
+<section id="books">
+  <h2>Book Chapters</h2>
+  <ul>
+    <li><a href="https://stm.bookpi.org/NRAMCS-V2/article/view/6790" target="_blank">Book Chapter</a></li>
+  </ul>
+</section>
+
+<section id="resume">
+  <h2>Resume</h2>
+  <a href="https://ibb.co/kVpYCcM7" target="_blank" class="download-button">Download CV</a>
+</section>
+
+<section id="contact">
+  <h2>Contact</h2>
+  <p>Email: <a href="mailto:sriram33677@gmail.com">sriram33677@gmail.com</a></p>
+  <p>Phone: +91-8438642767</p>
+  <p>Location: coimbatore, Tamilnadu, India</p>
+  <div style="margin-top: 1rem;">
+    <a href="https://github.com/sriram33677-ctrl" target="_blank">GitHub</a>
+    <div style="margin-top: 1rem;">
+    <a 
+href="https://www.instagram.com/sri__ram.01?igsh=azkwZDJld2JocXFh" 
+target="_blank">INSTAGRAM</a>   
+  </div>
+</section>
+
+<section id="certificates">
+  <h2>Certificates</h2>
+  <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+    <div style="text-align: center;">
+      <a href="" target="">
+        <img src="Screenshot_20250822-121354.Chrome.png" alt="Recent Trends" style="max-width: 200px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,255,0,0.3); border: 2px solid #00ff00;">
+      </a>
+      <p>IBM CERTIFICATE</p>
+    </div>
+    
+  </div>
+</section>
+
+<section id="experience">
+  <h2>Experience</h2>
+  <ul>
+    <li><b>Assistant Professor</b> – TSA College, Perur (1993 to 2000)<br>Served as a Tutor, Mentor</li>
+    <li><b>Assistant Professor</b> – CMS College (2000 to 2015)<br>Served as a Tutor, Mentor, Research Guide</li>
+    <li><b>Assistant Professor</b> – PTA GASC (2015–Present)<br>Served as a Tutor, Nodel Officer, BOS Chairman</li>
+   </ul>
+</section>
+
+<footer>
+  <p>&copy; 2025 Sriram.K. All rights reserved. <span class="omnitrix-symbol"></span></p>
+</footer>
+
+<div class="modal" id="passwordModal">
+  <div class="modal-content">
+    <h3>Enter Password</h3>
+    <input type="password" id="passwordInput" placeholder="Password">
+    <div class="error" id="errorMsg"></div>
+    <button onclick="checkPassword()">Submit</button>
+  </div>
+</div>
+
+<script>
+  const fileInput = document.getElementById('fileInput');
+  const profileImage = document.getElementById('profileImage');
+  const modal = document.getElementById('passwordModal');
+  const passwordInput = document.getElementById('passwordInput');
+  const errorMsg = document.getElementById('errorMsg');
+  const correctPassword = "5555";
+
+  const savedImage = localStorage.getItem("profileImage");
+  if (savedImage) {
+    profileImage.src = savedImage;
+  }
+
+  function showModal() {
+    modal.style.display = 'flex';
+    passwordInput.value = '';
+    errorMsg.textContent = '';
+    passwordInput.focus();
+  }
+
+  function checkPassword() {
+    if (passwordInput.value === correctPassword) {
+      modal.style.display = 'none';
+      fileInput.click();
+    } else {
+      errorMsg.textContent = "Woops! Try Again!";
+    }
+  }
+
+  fileInput.addEventListener('change', function () {
+    const file = this.files[0];
+    if (file && file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        profileImage.src = e.target.result;
+        localStorage.setItem("profileImage", e.target.result);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      alert("Please select a valid image file.");
+    }
+  });
+
+  window.onclick = function(e) {
+    if (e.target === modal) modal.style.display = "none";
+  };
+
+  const tabButtons = document.querySelectorAll('.tab-btn');
+  const tabSections = document.querySelectorAll('section');
+
+  tabButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelector('.tab-btn.active').classList.remove('active');
+      btn.classList.add('active');
+      tabSections.forEach(section => section.classList.remove('active'));
+      document.getElementById(btn.getAttribute('data-tab')).classList.add('active');
+    });
+  });
+
+  function toggleDarkMode() {
+    // Since we're already in dark mode, toggle to light mode
+    if (document.body.classList.contains('light-mode')) {
+      document.body.classList.remove('light-mode');
+      document.querySelector('.dark-toggle').textContent = "Toggle Light Mode";
+    } else {
+      document.body.classList.add('light-mode');
+      document.querySelector('.dark-toggle').textContent = "Toggle Dark Mode";
+    }
+  }
+
+  // Add light mode styles
+  const style = document.createElement('style');
+  style.textContent = `
+    .light-mode {
+      background: #f5f7fa;
+      color: #2b2525;
+    }
+    .light-mode header {
+      background: linear-gradient(135deg, #f5f7fa 0%, #1a4d2a 100%);
+    }
+    .light-mode .tabs {
+      background: #ffffff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .light-mode .tabs button {
+      background: #ffffff;
+      color: #1a4d2a;
+    }
+    .light-mode .tabs button:hover,
+    .light-mode .tabs button.active {
+      background: #1a4d2a;
+      color: #ffffff;
+    }
+    .light-mode section {
+      background: white;
+      color: #2b2525;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+    .light-mode h2 {
+      color: #1a4d2a;
+    }
+    .light-mode footer {
+      background: #1a4d2a;
+      color: white;
+    }
+  `;
+  document.head.appendChild(style);
+</script>
+</body>
+</html>
+```
